@@ -1,0 +1,72 @@
+html {
+  font-family: "Roboto Mono", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+
+[popover]:popover-open {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+[popover] {
+  font-size: 1.2rem;
+  padding: 20px;
+  text-align: center;
+  background-color: #FFF1FE; /* Ensure background is visible */
+  border: none; /* Removes any default border */
+  border-radius: 20px; /* Adjust for a rounded rectangle shape */
+  width: 50vw; /* Default width for desktop */
+  max-width: 400px;
+  position: fixed;
+
+}
+
+/* Smaller popover for mobile screens */
+@media (max-width: 500px) {
+  [popover] {
+    width: 80vw; /* Take up less space */
+    max-width: 250px; /* Smaller max size */
+    font-size: 1rem; /* Smaller text */
+    padding: 20px; /* Less padding */
+    top: 10%; /* Move it higher on smaller screens */
+  }
+}
+
+
+/* Needs to be included after the previous [popover]:popover-open
+   rule to take effect, as the specificity is the same */
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+
+/* Transition for the popover's backdrop */
+
+[popover]::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  transition:
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete,
+    background-color 0.7s;
+  /* Equivalent to
+  transition: all 0.7s allow-discrete; */
+}
+
+[popover]:popover-open::backdrop {
+  background-color: rgb(0 0 0 / 25%);
+}
+
+/* Nesting selectors (&) cannot represent pseudo-elements, so this 
+   starting-style rule cannot be nested. */
+
+@starting-style {
+  [popover]:popover-open::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+  }
+}
